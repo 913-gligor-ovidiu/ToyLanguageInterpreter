@@ -23,6 +23,10 @@ public class StringValue implements Value {
         return this.value.equals(castValue.value);
     }
 
+    @Override
+    public Value deepCopy() {
+        return new StringValue(value);
+    }
 
     @Override
     public Type getType() {

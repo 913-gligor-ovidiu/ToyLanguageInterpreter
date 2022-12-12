@@ -24,6 +24,11 @@ public class BooleanValue implements Value {
     }
 
     @Override
+    public Value deepCopy() {
+        return new BooleanValue(value);
+    }
+
+    @Override
     public String toString() {
         return Boolean.toString(value);
     }

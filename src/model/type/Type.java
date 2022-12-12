@@ -5,4 +5,5 @@ import model.value.Value;
 public interface Type {
     Value defaultValue();
     boolean equals(Type another);
+    Type deepCopy();
 }

@@ -32,11 +32,6 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public PrgState getCurrentPrg() {
-        return prgList.get(currentPos);
-    }
-
-    @Override
     public List<PrgState> getPrgList() {
         return prgList;
     }
@@ -52,10 +47,10 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void logPrgStateExec() throws IOException, ADTException {
+    public void logPrgStateExec(PrgState prgState) throws IOException, ADTException {
         PrintWriter logFile;
         logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-        logFile.println(this.getCurrentPrg().toString());
+        logFile.println(prgState.toString());
         logFile.close();
     }
 }

@@ -40,4 +40,9 @@ public class WhileStmt implements IStmt{
         return state;
     }
 
+    @Override
+    public String toString(){
+        return "while(" + exp.toString() + ") " + stmt.toString();
+    }
+
 }

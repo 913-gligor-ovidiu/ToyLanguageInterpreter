@@ -13,8 +13,7 @@ public class MyHeap implements MyIHeap {
 
     public int newValue(){
         freeLocation++;
-        while (freeLocation==0 || heap.containsKey(freeLocation)) // what does this while do? why is it needed? what happens if you remove it?
-            // it is needed because we don't want to overwrite the value at 0 or any other value that is already in the heap
+        while(heap.containsKey(freeLocation))
             freeLocation++;
         return freeLocation;
     }

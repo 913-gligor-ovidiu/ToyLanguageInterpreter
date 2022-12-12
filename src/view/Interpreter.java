@@ -1,15 +1,15 @@
 package view;
 
 import controller.Controller;
-import model.expressions.ArithmetciExpression;
-import model.expressions.ValueExpression;
-import model.expressions.VarExpression;
+import model.expressions.*;
 import model.programState.PrgState;
 import model.statements.*;
 import model.type.BooleanType;
 import model.type.IntType;
+import model.type.RefType;
 import model.type.StringType;
 import model.utils.MyHeap;
+import model.value.RefValue;
 import model.value.StringValue;
 import model.utils.MyDict;
 import model.utils.MyList;
@@ -63,12 +63,62 @@ public class Interpreter {
         IRepository repo4 = new Repository(prg4, "log4.txt");
         Controller controller4 = new Controller(repo4);
 
+        IStmt ex5 = new CompoundStmt(new VarDeclStmt("v", new IntType()),
+                new CompoundStmt(new AssignStmt("v", new ValueExpression(new IntValue(10))),
+                        new CompoundStmt(new NewStmt("v", new ValueExpression(new IntValue(20))),
+                                new CompoundStmt(new NewStmt("a", new ValueExpression(new IntValue(22))),
+                                        new CompoundStmt(new PrintStmt(new VarExpression("v")),
+                                                new PrintStmt(new ArithmetciExpression('+', new ValueExpression(new IntValue(100)), new
+                                                        ReadHeapExpression(new VarExpression("v")))))))));
+
+        PrgState prg5 = new PrgState(new MyStack<>(), new MyDict<>(), new MyList<>(), ex5, new MyDict<>(), new MyHeap());
+        IRepository repo5 = new Repository(prg5, "log5.txt");
+        Controller controller5 = new Controller(repo5);
+
+        IStmt ex6 = new CompoundStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompoundStmt(new NewStmt("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStmt(new NewStmt("a", new VarExpression("v")),
+                                        new CompoundStmt(new PrintStmt(new VarExpression("v")), new PrintStmt(new VarExpression("a")))))));
+
+        PrgState prg6 = new PrgState(new MyStack<>(), new MyDict<>(), new MyList<>(), ex6, new MyDict<>(), new MyHeap());
+        IRepository repo6 = new Repository(prg6, "log6.txt");
+        Controller controller6 = new Controller(repo6);
+
+        IStmt ex7 = new CompoundStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompoundStmt(new NewStmt("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStmt(new PrintStmt(new ReadHeapExpression(new VarExpression("v"))),
+                                new CompoundStmt(new WriteHeapStmt("v", new ValueExpression(new IntValue(30))),
+                                        new PrintStmt(new ArithmetciExpression('+', new ReadHeapExpression(new VarExpression("v")), new
+                                                ValueExpression(new IntValue(5))))))));
+
+        PrgState prg7 = new PrgState(new MyStack<>(), new MyDict<>(), new MyList<>(), ex7, new MyDict<>(), new MyHeap());
+        IRepository repo7 = new Repository(prg7, "log7.txt");
+        Controller controller7 = new Controller(repo7);
+
+
+        IStmt ex8 = new CompoundStmt(new VarDeclStmt("v", new IntType()),
+                new CompoundStmt(new AssignStmt("v", new ValueExpression(new IntValue(4))),
+                        new CompoundStmt(new WhileStmt(new RelationalExpression(">", new VarExpression("v"), new ValueExpression(new IntValue(0))),
+                                new CompoundStmt(new PrintStmt(new VarExpression("v")),
+                                        new AssignStmt("v", new ArithmetciExpression('-', new VarExpression("v"), new ValueExpression(new IntValue(1)))))),
+                                new PrintStmt(new VarExpression("v")))));
+
+        PrgState prg8 = new PrgState(new MyStack<>(), new MyDict<>(), new MyList<>(), ex8, new MyDict<>(), new MyHeap());
+        IRepository repo8 = new Repository(prg8, "log8.txt");
+        Controller controller8 = new Controller(repo8);
+
+
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExampleCommand("1", ex1.toString(), controller1));
         menu.addCommand(new RunExampleCommand("2", ex2.toString(), controller2));
         menu.addCommand(new RunExampleCommand("3", ex3.toString(), controller3));
         menu.addCommand(new RunExampleCommand("4", ex4.toString(), controller4));
+        menu.addCommand(new RunExampleCommand("5", ex5.toString(), controller5));
+        menu.addCommand(new RunExampleCommand("6", ex6.toString(), controller6));
+        menu.addCommand(new RunExampleCommand("7", ex7.toString(), controller7));
+        menu.addCommand(new RunExampleCommand("8", ex8.toString(), controller8));
         menu.show();
     }
 }

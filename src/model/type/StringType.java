@@ -14,6 +14,11 @@ public class StringType implements Type {
     }
 
     @Override
+    public Type deepCopy() {
+        return new StringType();
+    }
+
+    @Override
     public StringValue defaultValue() {
         return new StringValue("");
     }

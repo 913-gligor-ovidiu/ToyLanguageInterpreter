@@ -14,6 +14,11 @@ public class BooleanType implements Type {
     }
 
     @Override
+    public Type deepCopy() {
+        return new BooleanType();
+    }
+
+    @Override
     public Value defaultValue() {
         return new BooleanValue(false);
     }

@@ -17,6 +17,11 @@ public class IntType implements Type {
     }
 
     @Override
+    public Type deepCopy() {
+        return new IntType();
+    }
+
+    @Override
     public Value defaultValue() {
         return new IntValue(0);
     }

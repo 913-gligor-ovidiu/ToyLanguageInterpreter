@@ -12,7 +12,6 @@ public interface IRepository {
     void setPrgList(List<PrgState> prgList);
     void addPrg(PrgState prg);
 
-    void logPrgStateExec() throws IOException, ADTException;
+    void logPrgStateExec(PrgState prgState) throws IOException, ADTException;
 
-    PrgState getCurrentPrg();
 }

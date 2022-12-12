@@ -14,11 +14,11 @@ public class PrgState {
     private MyIStack<IStmt> exeStack;
     private MyIDict<String, Value> symTable;
     private MyIList<Value> out;
-
     private MyIHeap heap;
-
     private MyIDict<String, BufferedReader> fileTable;
     private IStmt originalProgram;
+    private int id;
+    private static int idGenerator = 0;
 
     public PrgState(MyIStack<IStmt> exeStack, MyIDict<String, Value> symTable, MyIList<Value> out, IStmt originalProgram, MyIDict<String, BufferedReader> fileTable, MyIHeap heap) {
         this.exeStack = exeStack;
@@ -28,7 +28,21 @@ public class PrgState {
         this.heap=heap;
         this.originalProgram = originalProgram;
         this.exeStack.push(originalProgram);
+        this.id = generateId();
+    }
 
+    public PrgState(MyIStack<IStmt> stack, MyIDict<String, Value> symTable, MyIList<Value> out, MyIDict<String, BufferedReader> fileTable, MyIHeap heap) {
+        this.exeStack = stack;
+        this.symTable = symTable;
+        this.out = out;
+        this.fileTable = fileTable;
+        this.heap=heap;
+        this.id = generateId();
+    }
+
+
+    public synchronized static int generateId(){
+        return idGenerator++;
     }
 
     public MyIStack<IStmt> getExeStack() {
@@ -67,9 +81,20 @@ public class PrgState {
         return fileTable;
     }
 
+    public boolean isNotCompleted() {
+        return !exeStack.isEmpty();
+    }
+
+    PrgState oneStep() throws Exception {
+        if (exeStack.isEmpty())
+            throw new Exception("PrgState stack is empty");
+        IStmt crtStmt = exeStack.pop();
+        return crtStmt.execute(this);
+    }
+
     @Override
     public String toString() {
-        return
+        return  "\nID: " + id +
                 "\nExeStack\n" + exeStack + "\n" +
                 "\nSymTable\n" + symTable + "\n" +
                 "\nOut\n" + out + "\n" +
