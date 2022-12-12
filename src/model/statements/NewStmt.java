@@ -48,7 +48,12 @@ public class NewStmt implements IStmt{
         state.setSymTable(symTable);
         state.setHeap(heap);
 
-        return state;
+        return null;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new NewStmt(varName, exp.deepCopy());
     }
 
     @Override

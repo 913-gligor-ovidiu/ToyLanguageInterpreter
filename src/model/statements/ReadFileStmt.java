@@ -59,8 +59,13 @@ public class ReadFileStmt implements IStmt {
         } else {
             throw new StatementExecException(String.format("%s is not present in the symTable.", varName));
         }
-        return state;
+        return null;
 
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new ReadFileStmt(exp.deepCopy(), varName);
     }
 
     @Override

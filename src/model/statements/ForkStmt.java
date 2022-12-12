@@ -32,6 +32,11 @@ public class ForkStmt implements IStmt{
     }
 
     @Override
+    public IStmt deepCopy(){
+        return new ForkStmt(statement.deepCopy());
+    }
+
+    @Override
     public String toString() {
         return "fork(" + statement.toString() + ")";
     }

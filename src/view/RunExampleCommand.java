@@ -15,7 +15,7 @@ public class RunExampleCommand extends Command{
     public void execute() {
         try {
             controller.setDisplayFlag(false);
-            controller.allSteps();
+            controller.allStep();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

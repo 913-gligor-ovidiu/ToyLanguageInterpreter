@@ -31,6 +31,11 @@ public class ReadHeapExpression implements IExpression{
     }
 
     @Override
+    public IExpression deepCopy() {
+        return new ReadHeapExpression(exp.deepCopy());
+    }
+
+    @Override
     public String toString() {
         return "rH(" + exp + ")";
     }

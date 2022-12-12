@@ -53,6 +53,10 @@ public class RelationalExpression implements IExpression {
         return null;
     }
 
+    @Override
+    public IExpression deepCopy() {
+        return new RelationalExpression(this.operator, this.expression1.deepCopy(), this.expression2.deepCopy());
+    }
 
     @Override
     public String toString() {

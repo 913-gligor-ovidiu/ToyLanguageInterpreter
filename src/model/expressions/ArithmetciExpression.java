@@ -50,6 +50,11 @@ public class ArithmetciExpression implements IExpression{
     }
 
     @Override
+    public IExpression deepCopy() {
+        return new ArithmetciExpression(op, e1.deepCopy(), e2.deepCopy());
+    }
+
+    @Override
     public String toString() {
         return e1.toString() + op + e2.toString();
     }

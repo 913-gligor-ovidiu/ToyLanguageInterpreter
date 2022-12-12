@@ -59,14 +59,14 @@ public class View {
         System.out.println("Option: ");
     }
 
-    private void runPrg1()throws StatementExecException, ExpressionEvalException, ADTException, IOException {
+    private void runPrg1()throws StatementExecException, ExpressionEvalException, ADTException, IOException, InterruptedException {
         IStmt ex1= new CompoundStmt(new VarDeclStmt("v",new IntType()),
                 new CompoundStmt(new AssignStmt("v",new ValueExpression(new IntValue(2))), new PrintStmt(new
                         VarExpression("v"))));
         runStmt(ex1);
     }
 
-    private void runPrg2()throws StatementExecException, ExpressionEvalException, ADTException, IOException {
+    private void runPrg2()throws StatementExecException, ExpressionEvalException, ADTException, IOException, InterruptedException {
         IStmt ex2 = new CompoundStmt( new VarDeclStmt("a",new IntType()),
                 new CompoundStmt(new VarDeclStmt("b",new IntType()),
                         new CompoundStmt(new AssignStmt("a", new ArithmetciExpression('+',new ValueExpression(new IntValue(2)),new
@@ -76,7 +76,7 @@ public class View {
         runStmt(ex2);
     }
 
-    private void runPrg3()throws StatementExecException, ExpressionEvalException, ADTException, IOException {
+    private void runPrg3()throws StatementExecException, ExpressionEvalException, ADTException, IOException, InterruptedException {
         IStmt ex3 = new CompoundStmt(new VarDeclStmt("a",new BooleanType()),
                 new CompoundStmt(new VarDeclStmt("v", new IntType()),
                         new CompoundStmt(new AssignStmt("a", new ValueExpression(new BooleanValue(true))),
@@ -86,7 +86,7 @@ public class View {
         runStmt(ex3);
     }
 
-    private void runStmt(IStmt stmt)throws ADTException, ExpressionEvalException, StatementExecException, IOException {
+    private void runStmt(IStmt stmt)throws ADTException, ExpressionEvalException, StatementExecException, IOException, InterruptedException {
         MyIStack<IStmt> exeStack = new MyStack<>();
         MyIDict<String, Value> symTable = new MyDict<>();
         MyIList<Value> out = new MyList<>();
@@ -103,7 +103,7 @@ public class View {
         String option = scanner.nextLine();
         ctrl.setDisplayFlag(option.equals("y"));
 
-        ctrl.allSteps();
+        ctrl.allStep();
         System.out.println("Result: "+prg.getOut().toString());
     }
 }

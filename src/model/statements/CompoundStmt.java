@@ -21,7 +21,11 @@ public class CompoundStmt implements IStmt {
         exeStack.push(second);
         exeStack.push(first);
         state.setExeStack(exeStack);
-        return state;
+        return null;
+    }
+    @Override
+    public IStmt deepCopy() {
+        return new CompoundStmt(first.deepCopy(), second.deepCopy());
     }
 
     @Override

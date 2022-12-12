@@ -26,7 +26,7 @@ public class PrgState {
         this.out = out;
         this.fileTable = fileTable;
         this.heap=heap;
-        this.originalProgram = originalProgram;
+        this.originalProgram = originalProgram.deepCopy();
         this.exeStack.push(originalProgram);
         this.id = generateId();
     }
@@ -85,7 +85,7 @@ public class PrgState {
         return !exeStack.isEmpty();
     }
 
-    PrgState oneStep() throws Exception {
+    public PrgState oneStep() throws Exception {
         if (exeStack.isEmpty())
             throw new Exception("PrgState stack is empty");
         IStmt crtStmt = exeStack.pop();

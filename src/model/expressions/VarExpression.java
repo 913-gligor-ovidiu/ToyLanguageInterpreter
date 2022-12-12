@@ -20,6 +20,11 @@ public class VarExpression implements IExpression {
     }
 
     @Override
+    public  IExpression deepCopy() {
+        return new VarExpression(id);
+    }
+
+    @Override
     public String toString() {
         return id;
     }

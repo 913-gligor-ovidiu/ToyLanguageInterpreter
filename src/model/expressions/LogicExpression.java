@@ -43,6 +43,11 @@ public class LogicExpression implements IExpression{
     }
 
     @Override
+    public IExpression deepCopy() {
+        return new LogicExpression(e1.deepCopy(), e2.deepCopy(), op);
+    }
+
+    @Override
     public String toString() {
         return e1.toString() + op + e2.toString();
     }

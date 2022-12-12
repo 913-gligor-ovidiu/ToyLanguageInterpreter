@@ -32,7 +32,12 @@ public class AssignStmt implements IStmt {
         else
             throw new StatementExecException("Variable " + id + " is not defined");
         state.setSymTable(symTable);
-        return state;
+        return null;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new AssignStmt(id, exp.deepCopy());
     }
 
     @Override

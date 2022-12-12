@@ -1,6 +1,8 @@
 package model.utils;
 
 import exceptions.ADTException;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,11 @@ public class MyDict<K,V> implements MyIDict<K,V>{
         if(!isDefined(key))
             throw new ADTException(key+ " is not defined");
         this.dict.remove(key);
+    }
+
+    @Override
+    public Collection<V> values(){
+        return this.dict.values();
     }
 
     @Override

@@ -42,7 +42,12 @@ public class WriteHeapStmt implements IStmt {
         heap.update(address, expValue);
         state.setHeap(heap);
 
-        return state;
+        return null;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new WriteHeapStmt(varName, exp.deepCopy());
     }
 
     @Override

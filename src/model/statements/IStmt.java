@@ -7,4 +7,5 @@ import model.programState.PrgState;
 
 public interface IStmt {
     PrgState execute(PrgState state) throws StatementExecException, ExpressionEvalException, ADTException;
+    IStmt deepCopy();
 }

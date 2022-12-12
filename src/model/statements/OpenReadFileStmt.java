@@ -41,7 +41,12 @@ public class OpenReadFileStmt implements IStmt {
                 throw new StatementExecException("File already open");
         } else
             throw new StatementExecException("Expression is not a string");
-        return state;
+        return null;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new OpenReadFileStmt(exp.deepCopy());
     }
 
     @Override

@@ -31,9 +31,14 @@ public class IfStmt implements IStmt{
             else
                 exeStack.push(elseStmt);
             state.setExeStack(exeStack);
-            return state;
+            return null;
         } else
             throw new StatementExecException("If statement: expression is not a boolean");
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new IfStmt(exp.deepCopy(), thenStmt.deepCopy(), elseStmt.deepCopy());
     }
 
     @Override

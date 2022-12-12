@@ -41,6 +41,9 @@ public class CloseReadFileStmt implements IStmt {
         return null;
     }
 
+    public IStmt deepCopy() {
+        return new CloseReadFileStmt(expression.deepCopy());
+    }
     @Override
     public String toString() {
         return String.format("closeReadFile(%s)", expression.toString());

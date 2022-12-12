@@ -108,6 +108,19 @@ public class Interpreter {
         IRepository repo8 = new Repository(prg8, "log8.txt");
         Controller controller8 = new Controller(repo8);
 
+        IStmt ex9 = new CompoundStmt(new VarDeclStmt("v", new IntType()),
+                new CompoundStmt(new  VarDeclStmt("a", new RefType(new IntType())),
+                        new CompoundStmt(new AssignStmt("v", new ValueExpression(new IntValue(10))),
+                                new CompoundStmt(new NewStmt("a", new ValueExpression(new IntValue(22))),
+                                        new CompoundStmt(new ForkStmt(new CompoundStmt(new WriteHeapStmt("a", new ValueExpression(new IntValue(30))),
+                                                new CompoundStmt(new AssignStmt("v", new ValueExpression(new IntValue(32))),
+                                                        new CompoundStmt(new PrintStmt(new VarExpression("v")), new PrintStmt(new ReadHeapExpression(new VarExpression("a"))))))),
+                                                new CompoundStmt(new PrintStmt(new VarExpression("v")), new PrintStmt(new ReadHeapExpression(new VarExpression("a")))))))));
+
+        PrgState prg9 = new PrgState(new MyStack<>(), new MyDict<>(), new MyList<>(), ex9, new MyDict<>(), new MyHeap());
+        IRepository repo9 = new Repository(prg9, "log9.txt");
+        Controller controller9 = new Controller(repo9);
+
 
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
@@ -119,6 +132,7 @@ public class Interpreter {
         menu.addCommand(new RunExampleCommand("6", ex6.toString(), controller6));
         menu.addCommand(new RunExampleCommand("7", ex7.toString(), controller7));
         menu.addCommand(new RunExampleCommand("8", ex8.toString(), controller8));
+        menu.addCommand(new RunExampleCommand("9", ex9.toString(), controller9));
         menu.show();
     }
 }

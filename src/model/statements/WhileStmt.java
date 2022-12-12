@@ -37,7 +37,12 @@ public class WhileStmt implements IStmt{
             exeStack.push(stmt);
         }
         state.setExeStack(exeStack);
-        return state;
+        return null;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new WhileStmt(exp.deepCopy(), stmt.deepCopy());
     }
 
     @Override
