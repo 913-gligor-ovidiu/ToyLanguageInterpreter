@@ -2,6 +2,7 @@ package model.expressions;
 
 import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
+import model.type.Type;
 import model.utils.MyIDict;
 import model.utils.MyIHeap;
 import model.value.Value;
@@ -13,6 +14,12 @@ public class VarExpression implements IExpression {
     public VarExpression(String id) {
         this.id = id;
     }
+
+    @Override
+    public Type typecheck(MyIDict<String, Type> typeEnv) throws ExpressionEvalException, ADTException {
+        return typeEnv.lookup(id);
+    }
+
 
     @Override
     public Value eval(MyIDict<String, Value> symTable, MyIHeap heap) throws ExpressionEvalException, ADTException {

@@ -2,7 +2,10 @@ package model.expressions;
 
 import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
+import jdk.jfr.Description;
+import model.type.BooleanType;
 import model.type.IntType;
+import model.type.Type;
 import model.utils.MyIDict;
 import model.utils.MyIHeap;
 import model.value.BooleanValue;
@@ -20,6 +23,22 @@ public class RelationalExpression implements IExpression {
         this.expression1 = expression1;
         this.expression2 = expression2;
         this.operator = operator;
+    }
+
+    @Override
+    public Type typecheck(MyIDict<String, Type> typeEnv) throws ExpressionEvalException,ADTException {
+        Type type1, type2;
+        type1 = expression1.typecheck(typeEnv);
+        type2 = expression2.typecheck(typeEnv);
+        if (type1.equals(new IntType())) {
+            if (type2.equals(new IntType())) {
+                return new BooleanType();
+            } else {
+                throw new ExpressionEvalException("second operand is not an integer");
+            }
+        } else {
+            throw new ExpressionEvalException("first operand is not an integer");
+        }
     }
 
     @Override

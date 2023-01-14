@@ -5,6 +5,9 @@ import exceptions.ExpressionEvalException;
 import exceptions.StatementExecException;
 import model.expressions.IExpression;
 import model.programState.PrgState;
+import model.type.BooleanType;
+import model.type.Type;
+import model.utils.MyIDict;
 import model.utils.MyIStack;
 import model.value.BooleanValue;
 import model.value.Value;
@@ -38,6 +41,18 @@ public class WhileStmt implements IStmt{
         }
         state.setExeStack(exeStack);
         return null;
+    }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+
+        Type typeExp = exp.typecheck(typeEnv);
+        if (typeExp.equals(new BooleanType())) {
+            stmt.typecheck(typeEnv.deepCopy());
+            return typeEnv;
+        } else {
+            throw new StatementExecException("The condition of WHILE has not the type bool");
+        }
     }
 
     @Override

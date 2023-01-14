@@ -59,4 +59,13 @@ public class MyDict<K,V> implements MyIDict<K,V>{
     public String toString(){
         return dict.toString();
     }
+
+    @Override
+    public MyIDict<K, V> deepCopy() throws ADTException {
+        MyIDict<K, V> newDict = new MyDict<>();
+        for (Map.Entry<K, V> entry : dict.entrySet()) {
+            newDict.put(entry.getKey(), entry.getValue());
+        }
+        return newDict;
+    }
 }

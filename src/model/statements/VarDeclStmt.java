@@ -30,6 +30,12 @@ public class VarDeclStmt implements IStmt{
     }
 
     @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        typeEnv.put(name, type);
+        return typeEnv;
+    }
+
+    @Override
     public IStmt deepCopy() {
         return new VarDeclStmt(name, type.deepCopy());
     }

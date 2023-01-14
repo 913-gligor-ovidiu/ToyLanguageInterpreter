@@ -2,10 +2,12 @@ package model.expressions;
 
 import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
+import model.type.RefType;
 import model.utils.MyIDict;
 import model.utils.MyIHeap;
 import model.value.RefValue;
 import model.value.Value;
+import model.type.Type;
 
 public class ReadHeapExpression implements IExpression{
 
@@ -14,6 +16,18 @@ public class ReadHeapExpression implements IExpression{
     public ReadHeapExpression(IExpression exp) {
         this.exp = exp;
     }
+
+    @Override
+    public Type typecheck(MyIDict<String, Type> typeEnv) throws ExpressionEvalException,ADTException {
+        Type type = exp.typecheck(typeEnv);
+        if (type instanceof RefType) {
+            RefType refType = (RefType) type;
+            return refType.getInner();
+        } else {
+            throw new ExpressionEvalException("The rH argument is not a Ref Type");
+        }
+    }
+
 
     @Override
     public Value eval(MyIDict<String, Value> symTable, MyIHeap heap) throws ExpressionEvalException, ADTException {

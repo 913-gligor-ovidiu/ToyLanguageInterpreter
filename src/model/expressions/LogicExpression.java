@@ -2,6 +2,7 @@ package model.expressions;
 
 import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
+import model.type.Type;
 import model.utils.MyIDict;
 import model.utils.MyIHeap;
 import model.value.Value;
@@ -18,6 +19,25 @@ public class LogicExpression implements IExpression{
         this.e2 = e2;
         this.op = op;
     }
+
+
+    @Override
+
+    public Type typecheck(MyIDict<String, Type> typeEnv) throws ExpressionEvalException, ADTException {
+        Type type1, type2;
+        type1 = e1.typecheck(typeEnv);
+        type2 = e2.typecheck(typeEnv);
+        if (type1.equals(new BooleanType())) {
+            if (type2.equals(new BooleanType())) {
+                return new BooleanType();
+            } else {
+                throw new ExpressionEvalException("second operand is not a boolean");
+            }
+        } else {
+            throw new ExpressionEvalException("first operand is not a boolean");
+        }
+    }
+
 
     @Override
     public Value eval(MyIDict<String, Value> symTable, MyIHeap heap) throws ExpressionEvalException, ADTException {

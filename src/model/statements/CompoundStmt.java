@@ -3,6 +3,8 @@ package model.statements;
 import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
 import exceptions.StatementExecException;
+import model.type.Type;
+import model.utils.MyIDict;
 import model.utils.MyIStack;
 import model.programState.PrgState;
 
@@ -13,6 +15,11 @@ public class CompoundStmt implements IStmt {
     public CompoundStmt(IStmt first, IStmt second) {
         this.first = first;
         this.second = second;
+    }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        return second.typecheck(first.typecheck(typeEnv));
     }
 
     @Override

@@ -6,6 +6,7 @@ import exceptions.StatementExecException;
 import model.expressions.IExpression;
 import model.programState.PrgState;
 import model.type.StringType;
+import model.type.Type;
 import model.utils.MyIDict;
 import model.value.StringValue;
 import model.value.Value;
@@ -20,6 +21,16 @@ public class OpenReadFileStmt implements IStmt {
 
     public OpenReadFileStmt(IExpression exp) {
         this.exp = exp;
+    }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        Type type = exp.typecheck(typeEnv);
+        if (type.equals(new StringType())) {
+            return typeEnv;
+        } else {
+            throw new StatementExecException("OpenReadFileStmt: expression is not a string");
+        }
     }
 
     @Override

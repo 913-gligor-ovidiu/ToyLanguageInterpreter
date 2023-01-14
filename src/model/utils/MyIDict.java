@@ -12,4 +12,6 @@ public interface MyIDict <K, V> {
     Collection<V> values();
     void remove(K key) throws ADTException;
     Map<K, V> getContent();
+
+    MyIDict<K, V> deepCopy() throws ADTException;
 }

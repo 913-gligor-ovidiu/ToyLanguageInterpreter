@@ -5,6 +5,9 @@ import exceptions.ExpressionEvalException;
 import exceptions.StatementExecException;
 import model.expressions.IExpression;
 import model.programState.PrgState;
+import model.type.RefType;
+import model.type.Type;
+import model.utils.MyDict;
 import model.utils.MyIDict;
 import model.utils.MyIHeap;
 import model.value.RefValue;
@@ -44,6 +47,17 @@ public class WriteHeapStmt implements IStmt {
 
         return null;
     }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        Type typeVar = typeEnv.lookup(varName);
+        Type typeExp = exp.typecheck(typeEnv);
+        if(typeVar.equals(new RefType(typeExp)))
+            return typeEnv;
+        else
+            throw new StatementExecException("WritHeapt: right hand side and left hand side have different types");
+    }
+
 
     @Override
     public IStmt deepCopy() {

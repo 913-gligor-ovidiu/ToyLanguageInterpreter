@@ -19,6 +19,17 @@ public class AssignStmt implements IStmt {
     }
 
     @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        Type typeVar = typeEnv.lookup(id);
+        Type typeExp = exp.typecheck(typeEnv);
+        if (typeVar.equals(typeExp))
+            return typeEnv;
+        else
+            throw new StatementExecException("Assignment: right hand side and left hand side have different types");
+    }
+
+
+    @Override
     public PrgState execute(PrgState state) throws StatementExecException, ExpressionEvalException, ADTException {
         MyIDict<String, Value> symTable = state.getSymTable();
         if(symTable.isDefined(id)) {

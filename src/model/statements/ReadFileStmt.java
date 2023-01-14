@@ -7,6 +7,8 @@ import model.expressions.IExpression;
 import model.programState.PrgState;
 import model.type.IntType;
 import model.type.StringType;
+import model.type.Type;
+import model.utils.MyDict;
 import model.utils.MyIDict;
 import model.value.IntValue;
 import model.value.StringValue;
@@ -61,6 +63,25 @@ public class ReadFileStmt implements IStmt {
         }
         return null;
 
+    }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        Type type = exp.typecheck(typeEnv);
+        if (type.equals(new StringType())) {
+            if (typeEnv.isDefined(varName)) {
+                Type varType = typeEnv.lookup(varName);
+                if (varType.equals(new IntType())) {
+                    return typeEnv;
+                } else {
+                    throw new StatementExecException(String.format("%s is not of type IntType", varName));
+                }
+            } else {
+                throw new StatementExecException(String.format("%s is not defined in the typeEnv", varName));
+            }
+        } else {
+            throw new StatementExecException(String.format("%s does not evaluate to StringType", exp));
+        }
     }
 
     @Override

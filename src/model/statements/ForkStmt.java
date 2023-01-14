@@ -4,6 +4,7 @@ import exceptions.ADTException;
 import exceptions.ExpressionEvalException;
 import exceptions.StatementExecException;
 import model.programState.PrgState;
+import model.type.Type;
 import model.utils.MyDict;
 import model.utils.MyIDict;
 import model.utils.MyIStack;
@@ -17,6 +18,11 @@ public class ForkStmt implements IStmt{
 
     public ForkStmt(IStmt statement){
         this.statement = statement;
+    }
+
+    @Override
+    public MyIDict<String, Type> typecheck(MyIDict<String, Type> typeEnv) throws StatementExecException, ExpressionEvalException, ADTException {
+        return statement.typecheck(typeEnv);
     }
 
     @Override
